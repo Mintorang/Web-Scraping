@@ -28,7 +28,7 @@ try:
     links = driver.find_elements(By.CLASS_NAME, "s-item__link")
 
 
-    # Loops the links var and takes out the href from the link tag in html. Append the links to another list called: ebay_prices
+    # Loops the links var and takes out the href from the link tag in html. Append the links to another list called: ebay_links
     for link in links:
         new_link = link.get_attribute("href")
         ebay_links.append(new_link)
@@ -42,12 +42,20 @@ try:
         ebay_prices.append(float(price.text.replace("£", "").replace("each", "")))
         ebay_prices.sort()
         item_content.update({f"{price.text}": [f"{link}", f"{description.text}"]})
+        for new_s, new_val in item_content.items():
+
+            # print first key
+            print(new_s, new_val)
+
+            # after getting first key break loop
+            break
 
 
-        
+    # Prints the dictionary full of details about the item
+    print(item_content)
 
     # Quits the chromedriver and concludes the program
     driver.quit()
 
-except error:
+except:
     print("There was an error with the program. Please search for a different item")
